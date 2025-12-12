@@ -2,24 +2,46 @@
 #'
 #' <Add Description>
 #'
+#' @param df dataframe
+#' @export
+df_to_tsv <- function(df) {
+  paste(
+    paste(colnames(df), collapse = "\t"),
+    apply(df, 1, function(row) paste(row, collapse = "\t")),
+    sep = "\n",
+    collapse = "\n"
+  )
+}
+#' @param width   Width of the widget (CSS units or number).
+#' @param height  Height of the widget (CSS units or number).
+#' @param elementId Optional element ID for the widget.
+#'
 #' @import htmlwidgets
 #'
 #' @export
-meta_map_widget <- function(message, width = NULL, height = NULL, elementId = NULL) {
+
+meta_map_widget <- function(width = NULL, height = NULL, elementId = NULL) {
 
   # forward options using x
-  x = list(
-    message = message
+
+  df <- data.frame(
+    latitude = runif(20, min = 34.0, max = 45.0),
+    longitude = runif(20, min = -120.0, max = -75.0),
+    name = paste("Sample", 1:20),
+    color_by = c(rep('type;proportion_infected;comically_small_test_column', 10), rep('type', 10)),
+    type = sample(c("Nursery", "Forest", "Urban", "Farm"), 20, replace = TRUE),
+    proportion_infected = runif(20),
+    comically_small_test_column = sample(c(0.000001898, 0.0000000023678876, 0.0024), 20, replace = TRUE)
   )
 
   # create widget
-  htmlwidgets::createWidget(
+  createWidget(
     name = 'meta_map_widget',
-    x,
+    x = df_to_tsv(df),
     width = width,
     height = height,
     package = 'metaMapWidgetR',
-    elementId = elementId
+    elementId = 'map'
   )
 }
 

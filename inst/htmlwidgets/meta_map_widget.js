@@ -11,9 +11,8 @@ HTMLWidgets.widget({
     return {
 
       renderValue: function(x) {
-
-        // TODO: code to render the widget, e.g.
-        el.innerText = x.message;
+        const tsv = x;
+        PSMapWidget(el.id, tsv, {});
 
       },
 
