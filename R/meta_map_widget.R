@@ -22,18 +22,25 @@ df_to_tsv <- function(df) {
 
 meta_map_widget <- function(width = NULL, height = NULL, elementId = NULL) {
 
-  # forward options using x
+  #uncomment below for test data generation
 
-  df <- data.frame(
-    latitude = runif(20, min = 34.0, max = 45.0),
-    longitude = runif(20, min = -120.0, max = -75.0),
-    name = paste("Sample", 1:20),
-    color_by = c(rep('type;proportion_infected;comically_small_test_column', 10), rep('type', 10)),
-    type = sample(c("Nursery", "Forest", "Urban", "Farm"), 20, replace = TRUE),
-    proportion_infected = runif(20),
-    comically_small_test_column = sample(c(0.000001898, 0.0000000023678876, 0.0024), 20, replace = TRUE)
+  #df <- data.frame(
+    #latitude = runif(20, min = 34.0, max = 45.0),
+    #longitude = runif(20, min = -120.0, max = -75.0),
+    #name = paste("Sample", 1:20),
+    #color_by = c(rep('type;proportion_infected;comically_small_test_column', 10), rep('type', 10)),
+    #type = sample(c("Nursery", "Forest", "Urban", "Farm"), 20, replace = TRUE),
+    #proportion_infected = runif(20),
+    #comically_small_test_column = sample(c(0.000001898, 0.0000000023678876, 0.0024), 20, replace = TRUE)
+  #)
+
+  df <- read.table(
+    "data.tsv",
+    header = TRUE,
+    sep = ";",
+    quote = "\"",
+    stringsAsFactors = FALSE
   )
-
   # create widget
   createWidget(
     name = 'meta_map_widget',
