@@ -12,6 +12,9 @@ df_to_tsv <- function(df) {
     collapse = "\n"
   )
 }
+
+
+#' @param input A `data.frame`, `tibble`, or a path to tabular data.
 #' @param width   Width of the widget (CSS units or number).
 #' @param height  Height of the widget (CSS units or number).
 #' @param elementId Optional element ID for the widget.
@@ -19,38 +22,34 @@ df_to_tsv <- function(df) {
 #' @import htmlwidgets
 #'
 #' @export
+meta_map_widget <- function(input, width = NULL, height = NULL, elementId = NULL) {
 
-meta_map_widget <- function(width = NULL, height = NULL, elementId = NULL) {
+  # Parse input to table
+  if (is.data.frame(input)) {
+    table <- input
+  } else if (is.character(input) && length(input) == 1) {
+    if (endsWith(input, '.tsv')) {
+      table <- read.csv(input, sep = '\t')
+    } else if (endsWith(input, '.csv')) {
+      table <- read.csv(input, sep = ',')
+    } else {
+      stop(call. = FALSE, 'Invalid table format. Paths to input data must end in .tsv or .csv and be in the corresponding format.')
+    }
+  } else {
+    stop(call. = FALSE, 'Input must be a path to a file or a data.frame/tibble.')
+  }
 
-  #uncomment below for test data generation
-
-  #df <- data.frame(
-    #latitude = runif(20, min = 34.0, max = 45.0),
-    #longitude = runif(20, min = -120.0, max = -75.0),
-    #name = paste("Sample", 1:20),
-    #color_by = c(rep('type;proportion_infected;comically_small_test_column', 10), rep('type', 10)),
-    #type = sample(c("Nursery", "Forest", "Urban", "Farm"), 20, replace = TRUE),
-    #proportion_infected = runif(20),
-    #comically_small_test_column = sample(c(0.000001898, 0.0000000023678876, 0.0024), 20, replace = TRUE)
-  #)
-
-  df <- read.table(
-    "data.tsv",
-    header = TRUE,
-    sep = ";",
-    quote = "\"",
-    stringsAsFactors = FALSE
-  )
   # create widget
   createWidget(
     name = 'meta_map_widget',
-    x = df_to_tsv(df),
+    x = df_to_tsv(table),
     width = width,
     height = height,
     package = 'metaMapWidgetR',
     elementId = 'map'
   )
 }
+
 
 #' Shiny bindings for meta_map_widget
 #'
@@ -72,6 +71,7 @@ meta_map_widget <- function(width = NULL, height = NULL, elementId = NULL) {
 meta_map_widgetOutput <- function(outputId, width = '100%', height = '400px'){
   htmlwidgets::shinyWidgetOutput(outputId, 'meta_map_widget', width, height, package = 'metaMapWidgetR')
 }
+
 
 #' @rdname meta_map_widget-shiny
 #' @export

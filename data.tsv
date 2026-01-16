@@ -1,7 +1,0 @@
-latitude;longitude;name;color_by;type;proportion_infected;comically_small_test_column
-44.10388;-92.11876;Sample 4;"type;proportion_infected;comically_small_test_column";Farm;0.95618302;0.0024
-39.66152;-109.55498;Sample 5;"type;proportion_infected;comically_small_test_column";Forest;0.12877409;0.0024
-42.88411;-83.22741;Sample 6;"type;proportion_infected;comically_small_test_column";Nursery;0.51290344;0.000001898
-34.99084;-77.66492;Sample 7;"type;proportion_infected;comically_small_test_column";Urban;0.68911320;0.0024
-40.21736;-115.33987;Sample 8;"type;proportion_infected;comically_small_test_column";Forest;0.04388271;0.0000000023678876
-37.55891;-98.44730;Sample 9;"type;proportion_infected;comically_small_test_column";Farm;0.87730066;0.0024
