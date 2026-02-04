@@ -1,0 +1,8 @@
+# License
+
+    ---
+    title: "LICENSE"
+    output: html_document
+    ---
+
+    YEAR: 2025
