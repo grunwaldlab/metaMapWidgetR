@@ -2,36 +2,21 @@
 output: github_document
 ---
 
-## metaMapWidget: R Wrapper for the meta-map-widget Leaflet widget
-
-```{r}
-library(metaMapWidgetR)
-df <- tibble::tibble(
-  latitude = runif(20, min = 34.0, max = 45.0),
-  longitude = runif(20, min = -120.0, max = -75.0),
-  name = paste("Sample", 1:20),
-  color_by = c(rep('type;proportion_infected;comically_small_test_column', 10), rep('type', 10)),
-  type = sample(c("Nursery", "Forest", "Urban", "Farm"), 20, replace = TRUE),
-  proportion_infected = runif(20),
-  comically_small_test_column = sample(c(0.000001898, 0.0000000023678876, 0.0024), 20, replace = TRUE)
-)
-print(df)
-
-example_data_path <- system.file('extdata', 'data.csv', package = 'metaMapWidgetR')
-
-meta_map_widget(df)
-meta_map_widget(example_data_path)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
 
+# metaMapWidget: R Wrapper for the meta-map-widget Leaflet widget
 
+This package allows users to view the locations of custom data samples and their various attributes using an interactive map widget. The widget may be embedded in Rmd/Quarto documents.
 
+## Installation
 
-```{r}
-library(rgbif)
-occ_data <- occ_search(scientificName = "Bombus franklini")
-occ_table <- occ_data$data
-occ_table$latitude <- occ_table$decimalLatitude
-occ_table$longitude <- occ_table$decimalLongitude
-meta_map_widget(occ_table)
+For now, metaMapWidgetR is only available on Github and can be installed with devtools:
+
+```{r eval=FALSE}
+devtools::install_github('grunwaldlab/metaMapWidgetR')
 ```
 
+```{r child='vignettes/articles/quickstart.Rmd'}
+```

@@ -1,28 +1,23 @@
-#' <Add Title>
-#'
-#' <Add Description>
-#'
-#' @param df dataframe
-#' @export
+#' @keywords internal
 df_to_tsv <- function(df) {
   paste(
-    paste(colnames(df), collapse = "\t"),
-    apply(df, 1, function(row) paste(row, collapse = "\t")),
-    sep = "\n",
+    c(paste(colnames(df), collapse = "\t"),
+      apply(df, 1, function(row) paste(row, collapse = "\t"))),
     collapse = "\n"
   )
 }
-
 
 #' @param input A `data.frame`, `tibble`, or a path to tabular data.
 #' @param width   Width of the widget (CSS units or number).
 #' @param height  Height of the widget (CSS units or number).
 #' @param elementId Optional element ID for the widget.
+#' @param sizeVar Size factor rendered by default.
+#' @param colorVar Color factor rendered by default.
 #'
 #' @import htmlwidgets
 #'
 #' @export
-meta_map_widget <- function(input, width = NULL, height = NULL, elementId = NULL) {
+meta_map_widget <- function(input, width = NULL, height = NULL, elementId = NULL, sizeVar = '', colorVar = '') {
 
   # Parse input to table
   if (is.data.frame(input)) {
@@ -39,14 +34,24 @@ meta_map_widget <- function(input, width = NULL, height = NULL, elementId = NULL
     stop(call. = FALSE, 'Input must be a path to a file or a data.frame/tibble.')
   }
 
+  #Convert NAs to empty strings for all columns
+  table[] = lapply(table, function(x) {
+    x[is.na(x)] = ''
+    return(x)
+  })
+
   # create widget
   createWidget(
     name = 'meta_map_widget',
-    x = df_to_tsv(table),
+    x = list(
+      tsv = df_to_tsv(table),
+      sizeVar = sizeVar,
+      colorVar = colorVar
+    ),
     width = width,
     height = height,
     package = 'metaMapWidgetR',
-    elementId = 'map'
+    elementId = elementId,
   )
 }
 
