@@ -18,5 +18,9 @@ For now, metaMapWidgetR is only available on Github and can be installed with de
 devtools::install_github('grunwaldlab/metaMapWidgetR')
 ```
 
+## Quickstart and Basic Usage
 ```{r child='vignettes/articles/quickstart.Rmd'}
 ```
+
+The map render function requires an input data set (either a TSV or dataframe), but extra parameters are optional. 
+
